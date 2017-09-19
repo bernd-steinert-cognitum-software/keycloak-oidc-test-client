@@ -1,0 +1,38 @@
+plugins {
+    id "com.bmuschko.tomcat" version "2.3"
+}
+group 'net.itconcepts'
+version '0.1'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.json:json:20170516'
+
+    providedCompile 'org.keycloak:keycloak-core:3.2.1.Final'
+    providedCompile 'org.keycloak:keycloak-adapter-core:3.2.1.Final'
+    providedCompile 'org.keycloak:keycloak-adapter-spi:3.2.1.Final'
+    providedCompile 'org.apache.httpcomponents:httpclient:4.5'
+    providedCompile 'org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.1.Final'
+
+    def tomcatVersion = '8.0.42'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
+           "org.keycloak:keycloak-tomcat8-adapter:3.2.1.Final",
+           "javax.servlet:jstl:1.2"
+}
+
+tomcat {
+    httpPort = 9090
+    httpsPort = 9091
+    enableSSL = true
+    contextPath = 'oicd-test-client'
+}
